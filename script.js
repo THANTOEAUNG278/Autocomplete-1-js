@@ -245,7 +245,11 @@ const autocompletetag = document.getElementsByClassName('autocomplete')[0];
 const resultContainerTag = document.getElementsByClassName('resultContainer')[0];
 
 autocompletetag.addEventListener('keyup', (event) =>{
+  resultContainerTag.innerHTML = '';
   const seacchText = event.target.value;
+  if (seacchText.length === 0){
+    return;
+  }
   const filtterproducts = products.filter(product => product.title.toLowerCase().includes(seacchText))
   
   const productToShow = filtterproducts.length > 0;
