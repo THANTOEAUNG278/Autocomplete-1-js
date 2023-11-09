@@ -244,13 +244,24 @@ const autocompletetag = document.getElementsByClassName('autocomplete')[0];
 
 const resultContainerTag = document.getElementsByClassName('resultContainer')[0];
 
+let filtterproducts = [];
+
 autocompletetag.addEventListener('keyup', (event) =>{
+
+  if (
+    event.key === "ArrowDown" ||
+    event.key === "ArrowUp" ||
+    event.key === "Enter" 
+  ) {
+    naigateAndSelectProduct(event.key);
+    return;
+  }
   resultContainerTag.innerHTML = '';
   const seacchText = event.target.value;
   if (seacchText.length === 0){
     return;
   }
-  const filtterproducts = products.filter(product => product.title.toLowerCase().includes(seacchText))
+  filtterproducts = products.filter(product => product.title.toLowerCase().includes(seacchText))
   
   const productToShow = filtterproducts.length > 0;
   if (productToShow){
@@ -275,3 +286,22 @@ autocompletetag.addEventListener('keyup', (event) =>{
     }
   }
 })
+let indexToSelect = -1;
+const naigateAndSelectProduct = (key) => {
+  if (key === 'ArrowDown') {
+    indexToSelect +=1;
+    const productIdToSelect = filtterproducts[indexToSelect].id.toString();
+    const productItemConjtainerSelect = document.getElementById(productIdToSelect);
+    productItemConjtainerSelect.style.backgroundColor = "blue"
+    productItemConjtainerSelect.firstChild.style.color = "white"
+    if (indexToSelect>0) {
+      const productToDeselete = document.getElementsByClassName('selected')[0];
+      productToDeselete.style.backgroundColor = "white"
+      productToDeselete.firstChild.style.color = "black"
+      productToDeselete.classList.remove('selected')
+    }
+    productItemConjtainerSelect.classList.add('selected')
+  }else {
+
+  }
+}
